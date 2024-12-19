@@ -1,27 +1,27 @@
 <template>
   <div>
-    <div>
-      {{ number }}
-    </div>
     <StringInput v-model="number"/>
     <button @click="validate">back validate</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
-import {BaseField} from "@/pages/BaseModels.ts";
-import StringInput from '@/pages/StringInput/StringInput.vue';
+import {reactive} from "vue";
+import {FieldModel} from "../validationModels/FieldModel";
+import StringInput from "@/pages/StringInput/StringInput.vue";
+import {min, required} from "../validationModels/validationRules";
 
-const number = ref<BaseField>(new BaseField({
+const number = reactive<FieldModel>(new FieldModel({
   label: 'hi',
   key: 'hi',
-  defaultValue: '1'
+  defaultValue: '1234',
+  validationRules: {'Не заполнено': required, 'Минимальная длина': (val) => min(val, 3)},
 }))
 
+number.showError = true;
+
 const validate = () => {
-  number.value.showError = !number.value.showError
-  number.value.backValidationError = "oh noooo"
+  number.frontValidate();
 }
 </script>
 

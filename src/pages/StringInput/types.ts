@@ -1,5 +1,5 @@
-import {BaseField} from "../BaseModels";
+import {FieldModel} from "../../validationModels/FieldModel";
 
 export type StringInputProps = {
-    modelValue: BaseField;
+    modelValue: FieldModel;
 }

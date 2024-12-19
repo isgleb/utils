@@ -1,13 +1,18 @@
 <template>
-  <input v-model="modelValue.value" :class="{'error-style': modelValue.showedError}">
+  <input v-model="modelValue.value" :class="{'error-style': errorFeedback}">
+  <div>{{ errorFeedback }}</div>
 </template>
 
 <script setup lang="ts">
-import {defineProps} from "vue";
+import {computed, defineProps} from "vue";
 import {StringInputProps} from "./types";
 
-const model = defineProps<StringInputProps>()
+const props = defineProps<StringInputProps>()
 
+const errorFeedback = computed(() => {
+  console.log(props.modelValue)
+  return props.modelValue?.showedError?.map(({description})=> description)?.join('; ')
+})
 </script>
 
 <style scoped>
